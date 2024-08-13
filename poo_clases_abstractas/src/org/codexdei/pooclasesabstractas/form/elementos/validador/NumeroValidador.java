@@ -3,7 +3,7 @@ package org.codexdei.pooclasesabstractas.form.elementos.validador;
 public class NumeroValidador extends Validador{
 
     //Atributos de la clase
-    protected String mensaje = "El campo debe ser numerico";
+    protected String mensaje = "El campo %s debe ser numerico";
 
     @Override
     public String getMensaje() {

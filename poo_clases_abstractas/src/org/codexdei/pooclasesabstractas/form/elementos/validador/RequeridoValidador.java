@@ -3,7 +3,7 @@ package org.codexdei.pooclasesabstractas.form.elementos.validador;
 public class RequeridoValidador extends Validador{
 
     //Atributos de la clase
-    protected String mensaje = "El campo es requerido";
+    protected String mensaje = "El campo %s es requerido";
 
     @Override
     public String getMensaje() {

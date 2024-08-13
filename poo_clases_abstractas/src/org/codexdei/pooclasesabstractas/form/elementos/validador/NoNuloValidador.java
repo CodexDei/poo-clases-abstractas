@@ -3,7 +3,7 @@ package org.codexdei.pooclasesabstractas.form.elementos.validador;
 public class NoNuloValidador extends Validador{
 
     //Atributos de la clase
-    private String mensaje = "El campo no puede ser nulo";
+    private String mensaje = "El campo %s no puede ser nulo";
 
     //Implementacion de metodos de la clase padre
     @Override

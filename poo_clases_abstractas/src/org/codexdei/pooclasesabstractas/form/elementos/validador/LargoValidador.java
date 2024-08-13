@@ -1,9 +1,11 @@
 package org.codexdei.pooclasesabstractas.form.elementos.validador;
 
-public class LargoValidador extends Validador{
+import org.codexdei.pooclasesabstractas.form.elementos.validador.mensaje.MensajeFormateable;
+
+public class LargoValidador extends Validador implements MensajeFormateable {
 
     //Atributos de la clase
-    protected String mensaje = "El campo debe tener minimo %d y maximo %d caracteres";
+    protected String mensaje = "El campo %s debe tener minimo %d y maximo %d caracteres";
     private int minimo;
     private int maximo = Integer.MAX_VALUE;
 
@@ -41,8 +43,6 @@ public class LargoValidador extends Validador{
     @Override
     public boolean esValido(String valor) {
 
-        this.mensaje = String.format(this.mensaje, this.minimo, this.maximo);
-
         if (valor == null){
 
             return true;
@@ -51,5 +51,10 @@ public class LargoValidador extends Validador{
         int largo = valor.length();
 
         return (largo >= minimo && largo <= maximo);
+    }
+
+    @Override
+    public String getMensajeFormateado(String campo) {
+        return this.mensaje = String.format(this.mensaje, campo, this.minimo, this.maximo);
     }
 }
