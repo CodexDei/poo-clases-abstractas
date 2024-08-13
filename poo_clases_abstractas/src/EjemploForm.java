@@ -1,10 +1,6 @@
-import org.codexdei.pooclasesabstractas.form.elementos.ElementoForm;
-import org.codexdei.pooclasesabstractas.form.elementos.InputForm;
-import org.codexdei.pooclasesabstractas.form.elementos.SelectForm;
-import org.codexdei.pooclasesabstractas.form.elementos.TextareaForm;
+import org.codexdei.pooclasesabstractas.form.elementos.*;
 import org.codexdei.pooclasesabstractas.form.elementos.select.Opcion;
-
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class EjemploForm {
@@ -20,34 +16,60 @@ public class EjemploForm {
 
         SelectForm lenguaje = new SelectForm("lenguaje");
 
-        Opcion java = new Opcion("1","Java");
-        lenguaje.addOpcion(java);
-        lenguaje.addOpcion(new Opcion("2", "Javascript"));
-        lenguaje.addOpcion(new Opcion("3","Kotlin"));
-        lenguaje.addOpcion(new Opcion("4","phyton"));
-        lenguaje.addOpcion(new Opcion("5","C#"));
+        Opcion phyton = new Opcion("1","Phyton");
+        Opcion java = new Opcion("2","Java");
+        //Se puede usar de forma encadenada porque es del tipo de la clase: SelectForm
+        lenguaje.addOpcion(phyton)
+        .addOpcion(java)
+        .addOpcion(new Opcion("3", "Javascript"))
+        .addOpcion(new Opcion("4","Kotlin"))
+        .addOpcion(new Opcion("5","C#"));
 
+        //Clase ANONIMA
+        ElementoForm saludar = new ElementoForm("saludo") {
+            @Override
+            public String dibujarHtml() {
+                return "<input disabled name='" + this.nombre + "' value=\"" + this.valor + "\">";
+            }
+        };
+
+        saludar.setValor("Hey!! este campo esta deshabilitado");
         userName.setValor("samy.7");
         password.setValor("4321");
         email.setValor("samy7@hotmail.com");
         edad.setValor("20");
         experiencia.setValor("...mas de 10 anios de experiencia...");
         java.setSelected(true);
-
-        List<ElementoForm> elementos = new ArrayList<>();
-
-        elementos.add(userName);
-        elementos.add(password);
-        elementos.add(email);
-        elementos.add(edad);
-        elementos.add(experiencia);
-        elementos.add(lenguaje);
-
-        for(ElementoForm elemento : elementos){
-
-            System.out.println(elemento.dibujarHtml());
-        }
-
+//Forma comun de agregar elementos a la lista
+//        List<ElementoForm> elementos = new ArrayList<>();
+//
+//        elementos.add(userName);
+//        elementos.add(password);
+//        elementos.add(email);
+//        elementos.add(edad);
+//        elementos.add(experiencia);
+//        elementos.add(lenguaje);
+    //Forma optimizada de agregar elementos a la lista
+    List<ElementoForm> elementos = Arrays.asList(
+            userName,
+            password,
+            email,
+            edad,
+            experiencia,
+            lenguaje,
+            saludar
+    );
+    //forma comun de iterar una lista:
+//        for(ElementoForm elemento : elementos){
+//
+//            System.out.println(elemento.dibujarHtml());
+//            System.out.println("<br>");
+//        }
+    //Forma optimizada de iterar una lista utilizando forEch lampda
+    elementos.forEach(e -> {
+        System.out.println(e.dibujarHtml());
+        System.out.println("<br>");
+    });
 
 
     }

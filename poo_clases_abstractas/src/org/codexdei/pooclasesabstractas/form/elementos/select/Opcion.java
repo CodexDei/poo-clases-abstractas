@@ -9,9 +9,10 @@ public class Opcion {
     //Constructores
     public Opcion(){}
 
-    public Opcion(String nombre, String valor) {
-        this.nombre = nombre;
+    public Opcion(String valor, String nombre) {
         this.valor = valor;
+        this.nombre = nombre;
+
     }
 
     //getters and setters
