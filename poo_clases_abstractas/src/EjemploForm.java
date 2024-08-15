@@ -5,55 +5,62 @@ import org.codexdei.pooclasesabstractas.form.elementos.validador.*;
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class EjemploForm {
 
+    public static boolean estadoPrograma;
+
     public static void main(String[] args) {
 
-        InputForm userName = new InputForm("username");
-        userName.addValidador(new RequeridoValidador());
+        do {
 
-        InputForm password = new InputForm("clave", "password");
-        password.addValidador(new RequeridoValidador())
-                .addValidador(new LargoValidador(6, 12));
+            estadoPrograma = true;
 
-        InputForm email = new InputForm("email", "email");
-        email.addValidador(new RequeridoValidador())
-                .addValidador(new EmailValidador());
+            InputForm userName = new InputForm("username");
+            userName.addValidador(new RequeridoValidador());
 
-        InputForm edad = new InputForm("edad", "number");
-        edad.addValidador(new RequeridoValidador())
-                .addValidador(new NumeroValidador());
+            InputForm password = new InputForm("clave", "password");
+            password.addValidador(new RequeridoValidador())
+                    .addValidador(new LargoValidador(6, 12));
 
-        TextareaForm experiencia = new TextareaForm("exp", 5, 9);
+            InputForm email = new InputForm("email", "email");
+            email.addValidador(new RequeridoValidador())
+                    .addValidador(new EmailValidador());
 
-        SelectForm lenguaje = new SelectForm("lenguaje");
-        lenguaje.addValidador(new NoNuloValidador());
+            InputForm edad = new InputForm("edad", "number");
+            edad.addValidador(new RequeridoValidador())
+                    .addValidador(new NumeroValidador());
 
-        Opcion phyton = new Opcion("1", "Phyton");
-        Opcion java = new Opcion("2", "Java");
-        //Se puede usar de forma encadenada porque es del tipo de la clase: SelectForm
-        lenguaje.addOpcion(phyton)
-                .addOpcion(java)
-                .addOpcion(new Opcion("3", "Javascript"))
-                .addOpcion(new Opcion("4", "Kotlin"))
-                .addOpcion(new Opcion("5", "C#"));
+            TextareaForm experiencia = new TextareaForm("exp", 5, 9);
 
-        //Clase ANONIMA
-        ElementoForm saludar = new ElementoForm("saludo") {
-            @Override
-            public String dibujarHtml() {
-                return "<input disabled name='" + this.nombre + "' value=\"" + this.valor + "\">";
-            }
-        };
+            SelectForm lenguaje = new SelectForm("lenguaje");
+            lenguaje.addValidador(new NoNuloValidador());
 
-        saludar.setValor("Hey!! este campo esta deshabilitado");
-        userName.setValor(JOptionPane.showInputDialog("Ingrese un nombre"));
-        password.setValor(JOptionPane.showInputDialog("Ingrese una clave"));
-        email.setValor(JOptionPane.showInputDialog("Ingrese un email"));
-        edad.setValor(JOptionPane.showInputDialog("Ingrese una edad"));
-        experiencia.setValor("...mas de 10 anios de experiencia...");
-        java.setSelected(true);
+            Opcion phyton = new Opcion("1", "Phyton");
+            Opcion java = new Opcion("2", "Java");
+            //Se puede usar de forma encadenada porque es del tipo de la clase: SelectForm
+            lenguaje.addOpcion(phyton)
+                    .addOpcion(java)
+                    .addOpcion(new Opcion("3", "Javascript"))
+                    .addOpcion(new Opcion("4", "Kotlin"))
+                    .addOpcion(new Opcion("5", "C#"));
+
+            //Clase ANONIMA
+            ElementoForm saludar = new ElementoForm("saludo") {
+                @Override
+                public String dibujarHtml() {
+                    return "<input disabled name='" + this.nombre + "' value=\"" + this.valor + "\">";
+                }
+            };
+
+            saludar.setValor("Hey!! este campo esta deshabilitado");
+            userName.setValor(JOptionPane.showInputDialog("Ingrese un nombre"));
+            password.setValor(JOptionPane.showInputDialog("Ingrese una clave"));
+            email.setValor(JOptionPane.showInputDialog("Ingrese un email"));
+            edad.setValor(JOptionPane.showInputDialog("Ingrese una edad"));
+            experiencia.setValor("...mas de 10 anios de experiencia...");
+            java.setSelected(true);
 //Forma comun de agregar elementos a la lista
 //        List<ElementoForm> elementos = new ArrayList<>();
 //
@@ -63,32 +70,35 @@ public class EjemploForm {
 //        elementos.add(edad);
 //        elementos.add(experiencia);
 //        elementos.add(lenguaje);
-        //Forma optimizada de agregar elementos a la lista
-        List<ElementoForm> elementos = Arrays.asList(
-                userName,
-                password,
-                email,
-                edad,
-                experiencia,
-                lenguaje,
-                saludar
-        );
-        //forma comun de iterar una lista:
+            //Forma optimizada de agregar elementos a la lista
+            List<ElementoForm> elementos = Arrays.asList(
+                    userName,
+                    password,
+                    email,
+                    edad,
+                    experiencia,
+                    lenguaje,
+                    saludar
+            );
+            //forma comun de iterar una lista:
 //        for(ElementoForm elemento : elementos){
 //
 //            System.out.println(elemento.dibujarHtml());
 //            System.out.println("<br>");
 //        }
-        //Forma optimizada de iterar una lista utilizando forEch lampda
-        elementos.forEach(e -> {
-            System.out.println(e.dibujarHtml());
-            System.out.println("<br>");
-        });
+            //Forma optimizada de iterar una lista utilizando forEch lampda
+            elementos.forEach(e -> {
+                System.out.println(e.dibujarHtml());
+                System.out.println("<br>");
+            });
 
-        elementos.forEach(e -> {
-            if (!e.esValido()) {
-                e.getErrores().forEach(System.out::println);
-            }
-        });
+            elementos.forEach(e -> {
+                if (!e.esValido()) {
+                    estadoPrograma = false;
+                    e.getErrores().forEach(System.out::println);
+
+                }
+            });
+        } while (!estadoPrograma);
     }
 }

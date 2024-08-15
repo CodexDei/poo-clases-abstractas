@@ -15,8 +15,6 @@ abstract public class ElementoForm {
     private List<Validador> validadores;
     private List<String> errores;
 
-//    List<String> validadores = new ArrayList<>();
-
     //Constructores
     public ElementoForm() {
 
