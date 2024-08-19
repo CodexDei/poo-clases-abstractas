@@ -96,7 +96,6 @@ public class EjemploForm {
                 if (!e.esValido()) {
                     estadoPrograma = false;
                     e.getErrores().forEach(System.out::println);
-
                 }
             });
         } while (!estadoPrograma);
